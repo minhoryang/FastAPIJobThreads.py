@@ -37,6 +37,8 @@ def _job_thread_with_async_loop(queue: Queue):
                 future = _[1]  # type: asyncio.Future
                 result = await coroutine
                 future.set_result(result)
+            except Exception as e:
+                future.set_exception(e)
             finally:
                 queue.task_done()
 
